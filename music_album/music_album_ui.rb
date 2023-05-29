@@ -29,12 +29,22 @@ class MusicAlbumUI
     end
   end
 
-  def add_genre
-    puts 'Genre name:-'
-    name = gets.chomp
+  def create_genre(name)
     genre = Genre.new(name)
     @genre << genre
     genre
+  end
+
+  def create_music_album(publish_date, spotify, genre)
+    new_music_album = MusicAlbum.new(publish_date, on_spotify: spotify)
+    new_music_album.genre = genre
+    @music_album << new_music_album
+  end
+
+  def add_genre
+    puts 'Genre name:-'
+    name = gets.chomp
+    create_genre(name)
   end
 
   def add_music_album
@@ -50,9 +60,7 @@ class MusicAlbumUI
     end
     option = gets.chomp.to_i
     genre = (option.zero? && add_genre) || @genre[option - 1]
-    new_music_album = MusicAlbum.new(publish_date, on_spotify: spotify)
-    new_music_album.genre = genre
-    @music_album << new_music_album
+    create_music_album(publish_date, spotify, genre)
     puts 'Music Album Created'
   end
 end
