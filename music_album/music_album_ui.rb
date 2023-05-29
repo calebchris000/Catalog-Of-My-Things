@@ -3,10 +3,13 @@ require_relative 'genre'
 require_relative 'music_album_store'
 
 class MusicAlbumUI
+  attr_reader :music_album_store, :music_album, :genre
+
   def initialize
     @music_album_store = MusicAlbumStore.new
     @music_album = []
     @genre = []
+    load_music_album
   end
 
   def list_music_album
@@ -41,11 +44,6 @@ class MusicAlbumUI
     new_music_album = MusicAlbum.new(publish_date, on_spotify: spotify)
     new_music_album.genre = genre
     @music_album << new_music_album
-    @music_album_store.store_music_album({
-      publish_date: publish_date,
-      on_spotify: spotify,
-      genre: genre.name
-      })
   end
 
   def add_genre
@@ -68,8 +66,45 @@ class MusicAlbumUI
     option = gets.chomp.to_i
     genre = (option.zero? && add_genre) || @genre[option - 1]
     create_music_album(publish_date, spotify, genre)
+    @music_album_store.store_music_album({
+                                           publish_date: publish_date,
+                                           on_spotify: spotify,
+                                           genre: genre.name
+                                         })
     puts 'Music Album Created'
+  end
+
+  def load_music_album
+    if File.exist?(@music_album_store.music_album_file)
+      music_albums = music_album_store.file_read(@music_album_store.music_album_file)
+    end
+    return unless music_albums
+
+    music_albums.each do |album|
+      genre = @genre.find { |obj| obj.name == album['genre'] }
+      genre ||= create_genre(album['genre'])
+      create_music_album(album['publish_date'], album['on_spotify'], genre)
+    end
   end
 end
 
 
+def main
+  status = true
+  m = MusicAlbumUI.new
+  while status
+    option = gets.chomp
+    case option.to_i
+    when 1
+      m.list_music_album
+    when 2
+      m.list_genre
+    when 3
+      m.add_music_album
+    else
+      status = false
+    end
+  end
+end
+
+main
