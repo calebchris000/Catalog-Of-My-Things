@@ -1,0 +1,1 @@
+-- Add your create table query as per instruction.
