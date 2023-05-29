@@ -6,6 +6,7 @@ class MusicAlbumUI
     @music_album = []
     @genre = []
   end
+
   def list_music_album
     if @music_album.empty?
       puts 'Music Album is empty.'
@@ -13,10 +14,9 @@ class MusicAlbumUI
       @music_album.each_with_index do |album, index|
         spotify = 'Unavailable'
         spotify = 'Available' if album.on_spotify
-        puts "#{index}) publish date:- #{album.publish_date} spotify:- #{spotify}" 
+        puts "#{index}) publish date:- #{album.publish_date} spotify:- #{spotify}"
       end
     end
-
   end
 
   def list_genre
@@ -24,41 +24,38 @@ class MusicAlbumUI
       puts 'Genre is empty.'
     else
       @genre.each_with_index do |genre, index|
-        puts "#{index}) genre:- #{genre.name}" 
+        puts "#{index}) genre:- #{genre.name}"
       end
     end
-
   end
 
   def add_genre
-    puts "Genre name:-"
+    puts 'Genre name:-'
     name = gets.chomp
     genre = Genre.new(name)
     @genre << genre
-    return genre
+    genre
   end
 
   def add_music_album
-    puts "Publish date (yyyy-mm-dd):-"
+    puts 'Publish date (yyyy-mm-dd):-'
     publish_date = gets.chomp
-    puts "Available on spotify (y/n):-"
+    puts 'Available on spotify (y/n):-'
     spotify = false
-    spotify = true unless ['n', 'N', 'no', 'No'].include?(gets.chomp)
-    puts "Select music album genre:-"
-    puts "0) Create new genere."
+    spotify = true unless %w[n N no No].include?(gets.chomp)
+    puts 'Select music album genre:-'
+    puts '0) Create new genere.'
     @genre.each_with_index do |genre, index|
-      puts "#{index+1}) #{@genre.name}" 
+      puts "#{index + 1}) #{genre.name}"
     end
     option = gets.chomp.to_i
-    genre = (option == 0 && add_genre) || @genere[option-1]
+    genre = (option.zero? && add_genre) || @genre[option - 1]
     new_music_album = MusicAlbum.new(publish_date, on_spotify: spotify)
     new_music_album.genre = genre
     @music_album << new_music_album
-    puts "Music Album Created"
+    puts 'Music Album Created'
   end
 end
-
-
 
 def main
   status = true
@@ -78,4 +75,4 @@ def main
   end
 end
 
-main()
+main
