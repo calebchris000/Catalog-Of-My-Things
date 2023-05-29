@@ -1,8 +1,10 @@
 require_relative 'music_album'
 require_relative 'genre'
+require_relative 'music_album_store'
 
 class MusicAlbumUI
   def initialize
+    @music_album_store = MusicAlbumStore.new
     @music_album = []
     @genre = []
   end
@@ -39,6 +41,11 @@ class MusicAlbumUI
     new_music_album = MusicAlbum.new(publish_date, on_spotify: spotify)
     new_music_album.genre = genre
     @music_album << new_music_album
+    @music_album_store.store_music_album({
+      publish_date: publish_date,
+      on_spotify: spotify,
+      genre: genre.name
+      })
   end
 
   def add_genre
@@ -65,22 +72,4 @@ class MusicAlbumUI
   end
 end
 
-def main
-  status = true
-  m = MusicAlbumUI.new
-  while status
-    option = gets.chomp
-    case option.to_i
-    when 1
-      m.list_music_album
-    when 2
-      m.list_genre
-    when 3
-      m.add_music_album
-    else
-      status = false
-    end
-  end
-end
 
-main
