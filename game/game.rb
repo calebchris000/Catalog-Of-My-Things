@@ -11,6 +11,7 @@ class Game < Item
 
   def to_h
     {
+      id = rand(1..1000)
       Publish_date: @publish_date,
       Mutiplayer: @multiplayer,
       Last_played: @last_played_at,
