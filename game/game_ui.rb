@@ -31,11 +31,11 @@ class GameUI
     end
 
     def add_game
-        puts 'Publish date:'
+        puts 'Publish date [YYYY-MM-DD]:'
         publish_date = gets.chomp
         puts 'Mutiplayer [Y/N]:'
         multiplayer = gets.chomp
-        puts 'Last Played:'
+        puts 'Last Played [YYYY-MM-DD]:'
         last_played_at = gets.chomp
         puts 'Author:'
         author = add_author
@@ -55,9 +55,6 @@ class GameUI
         last_name = gets.chomp
         author = Author.new(first_name, last_name)
         author
-        # File.write('game.json', JSON.generate(@author))
-        # puts "Author created successfuly!\n\n"
-        # puts "Please choose an option by entering a number!\n"
     end
 
 end
@@ -81,3 +78,4 @@ def main
   end
 
   main
+

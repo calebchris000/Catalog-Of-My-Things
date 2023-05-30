@@ -10,13 +10,14 @@ class Game < Item
   end
 
   def to_h
-    { Publish_date: @publish_date,
+    {
+      Publish_date: @publish_date,
       Mutiplayer: @multiplayer,
       Last_played: @last_played_at,
-      first_name: @author.first_name,
-      last_name: @author.last_name
-     }
+      author: "#{@author.first_name} #{@author.last_name}"
+    }
   end
+  
   private
 
   def can_be_archived?
