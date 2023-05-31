@@ -47,7 +47,8 @@ CREATE INDEX idx_label_id ON label(genre_id)
 CREATE TABLE book (
     id INT GENERATED ALWAYS AS IDENTITY,
     publish_date DATE,
-    publisher VARCHAR(120) 
+    publisher VARCHAR(120)
+    label_id INT,
     PRIMARY KEY (id) 
     CONSTRAINT fk_label_id FOREIGN KEY (label_id) REFERENCES label(id)
 ) 
