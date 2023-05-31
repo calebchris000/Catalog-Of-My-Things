@@ -1,11 +1,11 @@
-CREATE TABLE game (
+CREATE TABLE games (
   id INT PRIMARY KEY,
   publish_date DATE,
   multiplayer BOOLEAN,
   last_played_at DATE,
   archived BOOLEAN,
-  author VARCHAR(255),
-  FOREIGN KEY (author) REFERENCES author (id)
+  author_id INT,
+  FOREIGN KEY (author_id) REFERENCES authors (id)
 );
 
 CREATE TABLE authors (
