@@ -19,7 +19,7 @@ class MusicAlbumUI
       @music_album.each_with_index do |album, index|
         spotify = 'Unavailable'
         spotify = 'Available' if album.on_spotify
-        puts "#{index}) publish date:- #{album.publish_date} spotify:- #{spotify}"
+        puts "#{index})publish date:- #{album.publish_date} spotify:- #{spotify} genre:- #{album.genre.name}"
       end
     end
   end
@@ -53,7 +53,7 @@ class MusicAlbumUI
   end
 
   def add_music_album
-    puts 'Publish date (yyyy-mm-dd):-'
+    puts 'Publish date:-'
     publish_date = gets.chomp
     puts 'Available on spotify (y/n):-'
     spotify = false

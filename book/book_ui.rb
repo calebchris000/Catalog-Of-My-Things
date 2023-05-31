@@ -82,11 +82,11 @@ class BookUI
 
     @books << @object
     @labels << @new_label
-    puts 'Book created successfully' unless @book.nil?
-    exit_app
+    exit_app unless @book.nil?
   end
 
   def exit_app
+    puts 'Book created successfully'
     @file_handler = FileHandler.new('book/book.json')
     @file_handler.write_to_file(@books) unless @books.empty?
 

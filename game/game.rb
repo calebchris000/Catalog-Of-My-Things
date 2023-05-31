@@ -14,8 +14,8 @@ class Game < Item
       Publish_date: @publish_date,
       Mutiplayer: @multiplayer,
       Last_played: @last_played_at,
-      author: {first_name: @author.first_name,
-       last_name: @author.last_name},
+      author: { first_name: @author.first_name,
+                last_name: @author.last_name }
     }
   end
 

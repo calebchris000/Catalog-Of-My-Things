@@ -1,6 +1,6 @@
 require_relative 'app'
 require_relative 'modules/options'
- 
+
 class Main
   include Options
   def initialize
@@ -11,20 +11,20 @@ class Main
     puts "\nPlease choose an option by entering a number! \n"
     options
   end
-    
+
   def run
     status = true
     puts "Welcome to Catalog of my things :)\n\n"
-    while status do
+    while status
       greeting
       option = gets.chomp
-      if  option_methods.key?(option)
+      if option_methods.key?(option)
         @app.send(option_methods[option])
-      elsif option.to_i == 0
+      elsif option.to_i.zero?
         status = false
         puts "\nMake sure to visit soon :)\n"
       else
-        puts "Invalid option"
+        puts 'Invalid option'
       end
     end
   end

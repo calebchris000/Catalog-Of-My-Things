@@ -3,5 +3,6 @@
   { "publish_date": "2020-03-03", "on_spotify": true, "genre": "Sad" },
   { "publish_date": "2323-02-02", "on_spotify": true, "genre": "comedy" },
   { "publish_date": "2020-02-23", "on_spotify": false, "genre": "test" },
-  { "publish_date": "2020-02-02", "on_spotify": true, "genre": "comedy" }
+  { "publish_date": "2020-02-02", "on_spotify": true, "genre": "comedy" },
+  { "publish_date": "02-02-2020", "on_spotify": true, "genre": "Sad" }
 ]
