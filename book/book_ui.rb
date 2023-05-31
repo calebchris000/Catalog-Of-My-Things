@@ -37,17 +37,13 @@ class BookUI
       4 => :exit_app
     }
     execute = @options[option]
-    if execute.nil?
-      puts 'Please, select a valid option'
-    end
+    puts 'Please, select a valid option' if execute.nil?
     send(execute)
   end
 
   def list_books
     puts "\n"
-    if @books.empty?
-      puts "There are no books... yet\n\n"
-    end
+    puts "There are no books... yet\n\n" if @books.empty?
     @books.each_with_index do |book, idx|
       print "#{idx + 1}. "
       book.each { |key, value| print "#{key}: #{value} " }
@@ -56,9 +52,7 @@ class BookUI
   end
 
   def list_labels
-    if @labels.empty?
-      puts 'There are currently no labels'
-    end
+    puts 'There are currently no labels' if @labels.empty?
     @labels.each_with_index do |label, idx|
       label.each { |key, value| print "#{idx + 1}. #{key}: #{value} " }
     end
