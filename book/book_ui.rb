@@ -1,4 +1,5 @@
 require_relative './book'
+require_relative './label'
 require 'json'
 class BookUI
   def initialize
@@ -24,7 +25,7 @@ class BookUI
 
   def read_from_file
     @file_handler = FileHandler.new('book/book.json').read_file
-    @parsed_data = JSON.parse(@file_handler)
+    @file_handler.empty? ? @parsed_data = [] : @parsed_data = JSON.parse(@file_handler)
     @books = @parsed_data
   end
 
@@ -36,6 +37,10 @@ class BookUI
       4 => :exit_app
     }
     execute = @options[option]
+    if execute.nil?
+      puts 'Please, select a valid option'
+      start
+    end
     send(execute)
   end
 
@@ -46,17 +51,21 @@ class BookUI
       start
     end
     @books.each_with_index do |book, idx|
-      book.each { |key, value| print "#{idx + 1}. #{key}: #{value} " }
+        print "#{idx + 1}. "
+        book.each { |key, value| print "#{key}: #{value} " }
       puts "\n"
     end
     start
   end
 
   def list_labels
-    return unless @labels.empty?
-
-    puts 'There are no labels'
-    start
+    if @labels.empty?
+      puts 'There are currently no labels'
+      start
+    end
+    @labels.each_with_index do |label, idx|
+      label.each { |key, value| print "#{idx + 1}. #{key}: #{value} " }
+    end
   end
 
   def create_book
@@ -66,7 +75,22 @@ class BookUI
     @cover_state = gets.chomp
     print 'Publish Date: '
     @publish_date = gets.chomp
+    puts "Book Label\n"
+    print 'Title: '
+    @label_title = gets.chomp
+    print 'Color: '
+    @label_color = gets.chomp
     @book = Book.new(@publish_date, @publisher, @cover_state)
+    @label = Label.new(@label_title, @label_color)
+
+    @label.add_item(@book)
+
+    @new_label = {
+      'Book Publisher' => @book.publisher,
+      'Title' => @label.title,
+      'Color' => @label.color
+    }
+
     @object = {
       'Publish-date' => @book.publish_date,
       'Publisher' => @book.publisher,
@@ -74,7 +98,7 @@ class BookUI
     }
 
     @books << @object
-
+    @labels << @new_label
     puts 'Book created successfully' unless @book.nil?
     start
   end
@@ -82,7 +106,10 @@ class BookUI
   def exit_app
     @file_handler = FileHandler.new('book/book.json')
     @file_handler.write_to_file(@books) unless @books.empty?
-    puts "\nMake sure to visit soon :)\n\n"
+
+    @file_handler = FileHandler.new('book/label.json')
+    @file_handler.write_to_file(@labels) unless @labels.empty?
+    puts "\nMake sure to visit soon :)\n"
     exit!
   end
 end
