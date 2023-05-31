@@ -6,7 +6,7 @@ class BookUI
     @books = []
     @labels = []
     read_from_file
-    puts "Welcome to the Book Section\n\n"
+    # puts "Welcome to the Book Section\n\n"
   end
 
   def start
@@ -21,12 +21,12 @@ class BookUI
     select_options(@selection)
   end
 
-  private
-
   def read_from_file
     @file_handler = FileHandler.new('book/book.json').read_file
     @parsed_data = @file_handler.empty? ? [] : JSON.parse(@file_handler)
     @books = @parsed_data
+    labels = FileHandler.new('book/label.json').read_file
+    @labels = labels.empty? ? [] : JSON.parse(labels)
   end
 
   def select_options(option)
@@ -54,7 +54,9 @@ class BookUI
   def list_labels
     puts 'There are currently no labels' if @labels.empty?
     @labels.each_with_index do |label, idx|
-      label.each { |key, value| print "#{idx + 1}. #{key}: #{value} " }
+      print "#{idx + 1}. "
+      label.each { |key, value| print "#{key}: #{value} " }
+      puts "\n"
     end
   end
 
@@ -81,6 +83,7 @@ class BookUI
     @books << @object
     @labels << @new_label
     puts 'Book created successfully' unless @book.nil?
+    exit_app
   end
 
   def exit_app
@@ -89,8 +92,6 @@ class BookUI
 
     @file_handler = FileHandler.new('book/label.json')
     @file_handler.write_to_file(@labels) unless @labels.empty?
-    puts "\nMake sure to visit soon :)\n"
-    exit!
   end
 end
 
@@ -112,5 +113,3 @@ class FileHandler
     @file
   end
 end
-bookui = BookUI.new
-bookui.start
