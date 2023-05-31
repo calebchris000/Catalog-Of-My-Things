@@ -26,7 +26,7 @@ class GameUI
       return
     end
     @games.each do |item|
-      puts "Fist name: #{item['first_name']}, Last name: #{item['last_name']}"
+      puts "Fist name: #{item['author']['first_name']}, Last name: #{item['author']['last_name']}"
     end
   end
 
