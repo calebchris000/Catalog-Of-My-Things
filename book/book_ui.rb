@@ -25,7 +25,7 @@ class BookUI
 
   def read_from_file
     @file_handler = FileHandler.new('book/book.json').read_file
-    @file_handler.empty? ? @parsed_data = [] : @parsed_data = JSON.parse(@file_handler)
+    @parsed_data = @file_handler.empty? ? [] : JSON.parse(@file_handler)
     @books = @parsed_data
   end
 
@@ -39,7 +39,6 @@ class BookUI
     execute = @options[option]
     if execute.nil?
       puts 'Please, select a valid option'
-      start
     end
     send(execute)
   end
@@ -48,20 +47,17 @@ class BookUI
     puts "\n"
     if @books.empty?
       puts "There are no books... yet\n\n"
-      start
     end
     @books.each_with_index do |book, idx|
-        print "#{idx + 1}. "
-        book.each { |key, value| print "#{key}: #{value} " }
+      print "#{idx + 1}. "
+      book.each { |key, value| print "#{key}: #{value} " }
       puts "\n"
     end
-    start
   end
 
   def list_labels
     if @labels.empty?
       puts 'There are currently no labels'
-      start
     end
     @labels.each_with_index do |label, idx|
       label.each { |key, value| print "#{idx + 1}. #{key}: #{value} " }
@@ -84,23 +80,13 @@ class BookUI
     @label = Label.new(@label_title, @label_color)
 
     @label.add_item(@book)
-
-    @new_label = {
-      'Book Publisher' => @book.publisher,
-      'Title' => @label.title,
-      'Color' => @label.color
-    }
-
-    @object = {
-      'Publish-date' => @book.publish_date,
-      'Publisher' => @book.publisher,
-      'Cover-state' => @book.cover_state
-    }
+    @new_label = { 'Book Publisher' => @book.publisher, 'Title' => @label.title, 'Color' => @label.color }
+    @object = { 'Publish-date' => @book.publish_date, 'Publisher' => @book.publisher,
+                'Cover-state' => @book.cover_state }
 
     @books << @object
     @labels << @new_label
     puts 'Book created successfully' unless @book.nil?
-    start
   end
 
   def exit_app
