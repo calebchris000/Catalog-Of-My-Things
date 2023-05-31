@@ -64,14 +64,16 @@ class MusicAlbumUI
       puts "#{index + 1}) #{genre.name}"
     end
     option = gets.chomp.to_i
-    genre = (option.zero? && add_genre) || @genre[option - 1]
-    create_music_album(publish_date, spotify, genre)
-    @music_album_store.store_music_album({
-                                           publish_date: publish_date,
-                                           on_spotify: spotify,
-                                           genre: genre.name
-                                         })
-    puts 'Music Album Created'
+    genre = option.zero? ? add_genre : @genre[option - 1]
+
+    if genre
+      create_music_album(publish_date, spotify, genre)
+      @music_album_store.store_music_album({ publish_date: publish_date, on_spotify: spotify,
+                                             genre: genre.name })
+      puts 'Music Album Created'
+    else
+      puts 'Invalid option'
+    end
   end
 
   def load_music_album
@@ -87,23 +89,3 @@ class MusicAlbumUI
     end
   end
 end
-
-def main
-  status = true
-  m = MusicAlbumUI.new
-  while status
-    option = gets.chomp
-    case option.to_i
-    when 1
-      m.list_music_album
-    when 2
-      m.list_genre
-    when 3
-      m.add_music_album
-    else
-      status = false
-    end
-  end
-end
-
-main

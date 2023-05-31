@@ -17,7 +17,7 @@ class MusicAlbumStore
   end
 
   def store_music_album(music_album)
-    # music_album = {publish_date, on_spotify, genre}
+    # Formate:- music_album = {publish_date, on_spotify, genre}
     music_albums = []
     music_albums = file_read(@music_album_file) if File.exist?(@music_album_file)
     music_albums << music_album
