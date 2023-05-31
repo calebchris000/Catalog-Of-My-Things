@@ -88,7 +88,6 @@ class MusicAlbumUI
   end
 end
 
-
 def main
   status = true
   m = MusicAlbumUI.new

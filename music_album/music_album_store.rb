@@ -2,6 +2,7 @@ require 'json'
 
 class MusicAlbumStore
   attr_reader :music_album_file
+
   def initialize
     @music_album_file = 'music_album/music_album.json'
   end
