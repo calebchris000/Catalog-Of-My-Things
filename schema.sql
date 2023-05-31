@@ -16,8 +16,6 @@ CREATE TABLE musicalbum (
     CONSTRAINT fk_genre FOREIGN KEY(genre_id) REFERENCES genre(id),
 );
 
-CREATE INDEX idx_genre_id ON musicalbum(genre_id)
-
 CREATE TABLE games (
   id INT PRIMARY KEY,
   publish_date DATE,
@@ -28,8 +26,6 @@ CREATE TABLE games (
   FOREIGN KEY (author_id) REFERENCES authors (id)
 );
 
-CREATE INDEX idx_author_id ON games(author_id)
-
 CREATE TABLE authors (
   id INT PRIMARY KEY,
   first_name VARCHAR(255),
@@ -38,17 +34,22 @@ CREATE TABLE authors (
 
 CREATE TABLE label (
     id INT,
+    title VARCHAR(150),
     color VARCHAR(50),
-    label_id INT PRIMARY KEY (id)
+    PRIMARY KEY (id),
 )
-
-CREATE INDEX idx_label_id ON label(genre_id)
 
 CREATE TABLE book (
     id INT GENERATED ALWAYS AS IDENTITY,
     publish_date DATE,
-    publisher VARCHAR(120)
-    label_id INT,
-    PRIMARY KEY (id) 
+    publisher VARCHAR(120),
+    cover_state VARCHAR(50),
+    archived BOOLEAN,
+    label_id INT, 
+    PRIMARY KEY (id), 
     CONSTRAINT fk_label_id FOREIGN KEY (label_id) REFERENCES label(id)
 ) 
+
+CREATE INDEX idx_book_label_id ON book (label_id);
+CREATE INDEX idx_musicalbum_genre_id ON musicalbum (genre_id);
+CREATE INDEX idx_games_author_id ON games (author_id);
