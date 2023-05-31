@@ -1,6 +1,5 @@
-require 'RSpec'
-require_relative '../book'
-RSpec.describe Book do
+require_relative '../book/book'
+describe Book do
   describe 'Book Test' do
     it 'should validate all book methods' do
       set_date = '2023-05-29'
