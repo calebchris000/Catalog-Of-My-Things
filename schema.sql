@@ -22,8 +22,6 @@ CREATE TABLE games (
   multiplayer BOOLEAN,
   last_played_at DATE,
   archived BOOLEAN,
-  author VARCHAR(255),
-  FOREIGN KEY (author) REFERENCES author (id)
   author_id INT,
   FOREIGN KEY (author_id) REFERENCES authors (id)
 );
